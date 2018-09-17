@@ -12,4 +12,6 @@ let mix = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+   .sass('resources/assets/sass/app.scss', 'public/css')
+   .version();
+//在末尾加了一个 version()，使 Mix 每次生成的静态文件后面加上一个类似版本号的参数，避免浏览器缓存。
