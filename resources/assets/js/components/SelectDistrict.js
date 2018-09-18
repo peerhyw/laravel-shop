@@ -36,7 +36,7 @@ Vue.component('select-district',{
 			//将城市列表设为当前省下的城市
 			this.cities = addressData[newVal];
 			//如果当前选中的城市不在当前省下，则将选中城市清空
-			if(!this.cities['cityId']) {
+			if(!this.cities[this.cityId]) {
 				this.cityId = '';
 			}
 		},
@@ -74,7 +74,14 @@ Vue.component('select-district',{
 				this.provinceId = '';
 				return;
 			}
-			//长到了，将当前省设置为对应的ID
+			//从当前省列表中找到与数组第一个元素同名的项的索引
+			const provinceId = _.findKey(this.provinces, o => o === value[0]);
+			//没找到，清空省的值
+			if(!provinceId){
+				this.provinces = '';
+				return;
+			}
+			//找到了，将当前省设置为对应的ID
 			this.provinceId = provinceId;
 			//由于观察器的作用，这个时候城市列表已经变成对应省的城市列表
 			//从当前城市列表找到与数组第二个元素同名的项的索引
