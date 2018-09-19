@@ -19,6 +19,10 @@ body{
 	margin-top: 0px;
 }
 
+.nav > li:hover .dropdown-menu{
+    display: block;
+}
+
 /* footer */
 html{
 	position: relative;
@@ -51,7 +55,7 @@ body{
 	}
 }
 
-.products-index-page{
+.products-index-page, .products-favorites-page{
 	.pagination{
 		margin-right: 5px;
 	}
