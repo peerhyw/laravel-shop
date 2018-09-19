@@ -12,12 +12,13 @@
 */
 
 Route::get('/', 'PagesController@root')->name('root');
+Route::get('products','ProductsController@index')->name('products.index');
 
 Auth::routes();
 
 //需要把这个路由放在 auth 这个中间件的路由组里面，因为只有已经登录的用户才能看到这个提示界面。
 Route::group(['middleware' => 'auth'],function(){
-	Route::get('/email_verify_notice','PagesController@emailVerifyNotice')->name('email_verify_notice');
+	Route::get('email_verify_notice','PagesController@emailVerifyNotice')->name('email_verify_notice');
 	Route::group(['middleware' => 'email_verified'],function(){
 		Route::get('user_addresses','UserAddressesController@index')->name('user_addresses.index');
 		Route::get('user_addresses/create','UserAddressesController@create')->name('user_addresses.create');
@@ -26,6 +27,6 @@ Route::group(['middleware' => 'auth'],function(){
 		Route::put('user_addresses/{user_address}','UserAddressesController@update')->name('user_addresses.update');
 		Route::delete('user_addresses/{user_address}','UserAddressesController@destroy')->name('user_addresses.destroy');
 	});
-	Route::get('/email_verification/verify', 'EmailVerificationController@verify')->name('email_verification.verify');
-	Route::get('/email_verification/send','EmailVerificationController@send')->name('email_verification.send');
+	Route::get('email_verification/verify', 'EmailVerificationController@verify')->name('email_verification.verify');
+	Route::get('email_verification/send','EmailVerificationController@send')->name('email_verification.send');
 });
