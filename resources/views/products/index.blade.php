@@ -27,14 +27,18 @@
 							<div class="product-content">
 								<div class="top">
 									<div class="img">
-										<!-- Laravel 的模型访问器会自动把下划线改为驼峰，所以 image_url 对应的就是 getImageUrlAttribute -->
-										<img src="{{ $product->image_url }}" alt="">
+										<a href="{{ route('products.show',['product' => $product->id]) }}">
+											<!-- Laravel 的模型访问器会自动把下划线改为驼峰，所以 image_url 对应的就是 getImageUrlAttribute -->
+											<img src="{{ $product->image_url }}" alt="">
+										</a>
 									</div>
 									<div class="price">
 										<b>￥</b>{{ $product->price }}
 									</div>
 									<div class="title">
-										{{ $product->title }}
+										<a href="{{ route('products.show',['product' => $product->id]) }}">
+											{{ $product->title }}
+										</a>
 									</div>
 								</div>
 								<div class="bottom">
