@@ -79,7 +79,7 @@
 						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-3 col-sm-3">
-								<button class="btn btn-primary btn-create-order">提交订单</button>
+								<button class="btn btn-primary btn-create-order" type="button">提交订单</button>
 							</div>
 						</div>
 					</form>
