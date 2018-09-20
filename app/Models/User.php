@@ -48,4 +48,8 @@ class User extends Authenticatable
                     ->orderBy('user_favorite_products.created_at','desc');
                     //代表默认的排序方式是根据中间表的创建时间倒序排序。
     }
+
+    public function cartItems(){
+        return $this->hasMany(CartItem::class);
+    }
 }

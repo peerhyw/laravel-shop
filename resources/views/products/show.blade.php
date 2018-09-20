@@ -130,6 +130,35 @@
 						});
 				});
 		});
+		//加入购物车按钮点击事件
+		$('.btn-add-to-cart').click(function(){
+			//请求加入购物车接口
+			axios.post('{{ route('cart.add') }}',{
+				//当用户点击 加入购物车 按钮时，通过 $('label.active input[name=skus]') 这个 CSS 选择器取得当前被选中的 SKU，并取得对应的 ID。
+				sku_id: $('label.active input[name=skus]').val(),
+				amount: $('.cart_amount input').val(),
+			}).then(function(){ //请求成功执行此回调
+					swal('加入购物车成功','','success');
+				},function(error){//请求失败执行此回调
+					if(error.response.status === 401){
+						//http状态码为401代表用户未登录
+						swal('请先登录','','error');
+					}else if(error.response.status === 422){
+						//http状态码为422代表用户输入校验失败
+						var html = '<div>';
+						_.each(error.response.data.errors,function(errors){
+							_.each(errors,function(error){
+								html += error+'<br>';
+							})
+						});
+						html += '</div>';
+						swal({content: $(html)[0],icon: 'error'})
+					}else{
+						//其他情况应该是系统挂了
+						swal('系统错误','','error');
+					}
+				})
+		});
 	})
 </script>
 @endsection
