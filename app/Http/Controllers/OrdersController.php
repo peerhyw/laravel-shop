@@ -69,7 +69,8 @@ class OrdersController extends Controller
     	});
     	$this->dispatch(new CloseOrder($order,config('app.order_ttl')));
 
-    	return $order;
+    	//cart/index.blade.php 的ajax返回的就是这个$order
+        return $order;
     }
 
     public function index(Request $request){
@@ -80,5 +81,11 @@ class OrdersController extends Controller
     				->orderBy('created_at','desc')
     				->paginate();
     	return view('orders.index',['orders' => $orders]);
+    }
+
+    public function show(Order $order,Request $request){
+        $this->authorize('own',$order);
+    	//这里的 load() 方法与上一章节介绍的 with() 预加载方法有些类似，称为 延迟预加载，不同点在于 load() 是在已经查询出来的模型上调用，而 with() 则是在 ORM 查询构造器上调用。
+    	return view('orders.show',['order' => $order->load(['items.productSku','items.product'])]);
     }
 }
