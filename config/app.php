@@ -2,6 +2,7 @@
 
 return [
 
+    'order_ttl' => 1800,
     'faker_locale' => 'zh_CN',
 
     /*
