@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\UserAddress;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserAddressPolicy
