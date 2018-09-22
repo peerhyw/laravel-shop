@@ -54,7 +54,7 @@
 													</td>
 													@if($index === 0)
 														<td class="total-amount text-center" rowspan="{{ count($order->items) }}">
-															￥{{ $order->total_amout }}
+															￥{{ $order->total_amount }}
 														</td>
 														<td class="text-center" rowspan="{{ count($order->items) }}">
 														@if($order->paid_at)

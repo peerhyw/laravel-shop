@@ -35,12 +35,15 @@ Route::group(['middleware' => 'auth'],function(){
 		Route::post('orders','OrdersController@store')->name('orders.store');
 		Route::get('orders','OrdersController@index')->name('orders.index');
 		Route::get('orders/{order}','OrdersController@show')->name('orders.show');
+		Route::get('payment/{order}/alipay','PaymentController@payByAlipay')->name('payment.alipay');
+		Route::get('payment/alipay/return','PaymentController@alipayReturn')->name('payment.alipay.return');
 	});
 	Route::get('email_verification/verify', 'EmailVerificationController@verify')->name('email_verification.verify');
 	Route::get('email_verification/send','EmailVerificationController@send')->name('email_verification.send');
 });
 
 Route::get('products/{product}','ProductsController@show')->name('products.show');
+Route::post('payment/alipay/notify','PaymentController@alipayNotify')->name('payment.alipay.notify');
 
 //测试alipay
 /*Route::get('alipay',function(){
