@@ -30,7 +30,6 @@ class OrdersController extends Controller
     /**
      * Show interface.
      *
-     * @param mixed   $id
      * @param Content $content
      * @return Content
      */
