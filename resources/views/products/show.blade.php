@@ -20,7 +20,7 @@
 								累计销量 <span class="cout">{{ $product->sold_count }}</span>
 							</div>
 							<div class="review_count">
-								累计销量 <span class="cout">{{ $product->review_count }}</span>
+								累计评论 <span class="cout">{{ $product->review_count }}</span>
 							</div>
 							<div class="rating" title="评分 {{ $product->rating }}">
 								评分 <span class="count">
@@ -82,6 +82,30 @@
 							{{!! $product->description !!}}
 						</div>
 						<div class="tab-pane" role="tabpanel" id="product-reviews-tab">
+							<!-- 评论列表开始 -->
+							<table class="table table-bordered table-striped">
+								<thead>
+									<tr>
+										<td>用户</td>
+										<td>商品</td>
+										<td>评分</td>
+										<td>评价</td>
+										<td>时间</td>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach($reviews as $review)
+										<tr>
+											<td>{{ $review->order->user->name }}</td>
+											<td>{{ $review->productSku->title }}</td>
+											<td>{{ str_repeat('★',$review->rating) }}{{ str_repeat('☆',5 - $review->rating) }}</td>
+											<td>{{ $review->review }}</td>
+											<td>{{ $review->reviewed_at->format('Y-m-d H:i') }}</td>
+										</tr>
+									@endforeach
+								</tbody>
+							</table>
+							<!-- 评论列表结束 -->
 						</div>
 					</div>
 				</div>
