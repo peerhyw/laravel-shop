@@ -53,6 +53,7 @@
 				<!-- 订单发货开始 -->
 				<!-- 如果订单未发货，展示发货表单 -->
 				@if($order->ship_status === \App\Models\Order::SHIP_STATUS_PENDING)
+					@if($order->refund_status !== \App\Models\Order::REFUND_STATUS_SUCCESS)
 					<tr>
 						<td colspan="4">
 							<form action="{{ route('admin.orders.ship',[$order->id]) }}" method="post" class="form-inline">
@@ -79,6 +80,7 @@
 							</form>
 						</td>
 					</tr>
+					@endif
 				@else
 					<!-- 否则展示物流公司和物流单号 -->
 					<tr>
@@ -137,6 +139,40 @@
 					data: JSON.stringify({ //将请求变成JSON字符
 						agree: false, // 拒绝申请
 						reason: inputValue,
+						//带上 CSRF token
+						//Laravel-Admin 页面里可以通过 LA.token 获得 CSRF Token
+						_token: LA.token,
+					}),
+					contentType: 'application/json', //请求的数据格式为JSON
+					success: function(data){ //返回成功时会调用这个函数
+						swal({
+							title: '操作成功',
+							type: 'success',
+						},function(){
+							location.reload();
+						});
+					}
+				});
+			});
+		});
+		//同意按钮的点击事件
+		$('#btn-refund-agree').click(function(){
+			swal({
+				title: '确认要将款项退还给用户？',
+				type: 'warning',
+				showCancelButton: true,
+				closeOnConfirm: false,
+				confirmButtonText: "确认",
+				cancelButtonText: "取消",
+			},function(ret){
+				if(!ret){
+					return;
+				}
+				$.ajax({
+					url: '{{ route('admin.orders.handle_refund',[$order->id]) }}',
+					type: 'POST',
+					data: JSON.stringify({ //将请求变成JSON字符
+						agree: ture, // 同意退款申请
 						//带上 CSRF token
 						//Laravel-Admin 页面里可以通过 LA.token 获得 CSRF Token
 						_token: LA.token,
