@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
         //往服务容器注入一个名为alipay的单例对象
         $this->app->singleton('alipay',function(){
             $config = config('pay.alipay');
-            $config['notify_url'] = 'http://requestbin.fullcontact.com/1geug1j1';//服务器端回调地址
+            $config['notify_url'] = 'http://requestbin.leo108.com/1hlrda61';//route('payment.alipay.notify');//服务器端回调地址
             $config['return_url'] = route('payment.alipay.return');//前端回调地址
             //判断当前项目运行环境是否为线上环境
             if(app()->environment() !== 'production'){
@@ -49,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton('wechat_pay',function(){
             $config = config('pay.wechat');
-            $config['notify_url'] = 'http://requestbin.fullcontact.com/1geug1j1';
+            $config['notify_url'] = 'http://requestbin.leo108.com/1hlrda61';
             if(app()->environment() !== 'production'){
                 $config['log']['level'] = Logger::DEBUG;
             }else{

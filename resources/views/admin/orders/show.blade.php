@@ -172,9 +172,7 @@
 					url: '{{ route('admin.orders.handle_refund',[$order->id]) }}',
 					type: 'POST',
 					data: JSON.stringify({ //将请求变成JSON字符
-						agree: ture, // 同意退款申请
-						//带上 CSRF token
-						//Laravel-Admin 页面里可以通过 LA.token 获得 CSRF Token
+						agree: true, // 同意退款申请
 						_token: LA.token,
 					}),
 					contentType: 'application/json', //请求的数据格式为JSON

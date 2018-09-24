@@ -62,7 +62,8 @@ class PaymentController extends Controller
 
     	$this->afterPaid($order);
     	return app('alipay')->success();
-    	//\Log::debug('Alipay notify',$data->all());
+    	/*$data = app('alipay')->verify();
+        \Log::debug('Alipay notify', $data->all());*/
     }
 
     public function payByWechat(Order $order,Request $request){
