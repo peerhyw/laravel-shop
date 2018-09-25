@@ -77,6 +77,19 @@
 								<textarea name="remark" rows="3" class="form-control"></textarea>
 							</div>
 						</div>
+						<!-- 优惠码开始 -->
+						<div class="form-group">
+							<label for="" class="control-label col-sm-3">优惠码</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="coupon_code">
+								<span class="help-block" id="coupon_desc"></span>
+							</div>
+							<div class="col-sm-3">
+								<button class="btn btn-success" id="btn-check-coupon" type="button">检查</button>
+								<button class="btn btn-danger" id="btn-cancel-coupon" style="display: none;">取消</button>
+							</div>
+						</div>
+						<!-- 优惠码取消 -->
 						<div class="form-group">
 							<div class="col-sm-offset-3 col-sm-3">
 								<button class="btn btn-primary btn-create-order" type="button">提交订单</button>
@@ -180,6 +193,39 @@
 						swal('系统错误','','error');
 					}
 				});
+		});
+		//检查按钮点击事件
+		$('#btn-check-coupon').click(function(){
+			//获取用户输入的优惠码
+			var code = $('input[name=coupon_code]').val();
+			//如果没有输入则弹框提示
+			if(!code){
+				swal('请输入优惠码','','warning');
+				return;
+			}
+			//调用检查接口
+			axios.get('/coupon_codes/' + encodeURIComponent(code))
+				.then(function(response){
+					$('#coupon_desc').text(response.data.description);//输入优惠信息
+					$('input[name=coupon_code]').prop('readonly',true);//禁用输入框
+					$('#btn-cancel-coupon').show();//显示 取消 按钮
+					$('#btn-check-coupon').hide()//隐藏检查按钮
+				},function(error){
+					if(error.response.status === 404){
+						swal('优惠码不存在','','error');
+					}else if(error.response.status === 403){
+						swal(error.response.data.msg,'','error');
+					}else{
+						swal('系统内部错误','','error');
+					}
+				});
+		});
+		//隐藏 按钮点击事件
+		$('#btn-cancel-coupon').click(function(){
+			$('#coupon_desc').text('');//隐藏优惠信息
+			$('input[name=coupon_code]').prop('readonly',false); //启用输入框
+			$('$btn-cancel-coupon').hide();
+			$('#btn-check-coupon').show();
 		});
 	});
 </script>
