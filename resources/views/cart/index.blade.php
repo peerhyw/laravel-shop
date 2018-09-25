@@ -189,6 +189,8 @@
 						});
 						html += '</div>';
 						swal({content: $(html)[0],icon: 'error'})
+					}else if(error.response.status === 403){
+						swal(error.response.data.msg,'','error');
 					}else{
 						//其他清空应该是系统挂了
 						swal('系统错误','','error');
